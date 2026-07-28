@@ -265,6 +265,7 @@ local callInLists = {
 	"FeatureReclaimStartedETA",
 	"UnitBuildspeedDebuffHealthbars",
 	"UnitBuildspeedDebuffEndHealthbars",
+	"SharePolicyChanged",
 	"GadgetAddMessage",
 	"GadgetReceiveAwards",
 	"UnitScriptLight",
@@ -3642,6 +3643,16 @@ function widgetHandler:UnitBuildspeedDebuffHealthbars(unitID, startFrame, expire
 	tracy.ZoneBeginN("W:UnitBuildspeedDebuffHealthbars")
 	for _, w in ipairs(self.UnitBuildspeedDebuffHealthbarsList) do
 		w:UnitBuildspeedDebuffHealthbars(unitID, startFrame, expireFrame)
+	end
+	tracy.ZoneEnd()
+	return
+end
+
+-- The transfer module says a team's sharing policy changed (modules/transfer/gadgets/game_share_policy_forwarding.lua).
+function widgetHandler:SharePolicyChanged(teamID, domain)
+	tracy.ZoneBeginN("W:SharePolicyChanged")
+	for _, w in ipairs(self.SharePolicyChangedList) do
+		w:SharePolicyChanged(teamID, domain)
 	end
 	tracy.ZoneEnd()
 	return
